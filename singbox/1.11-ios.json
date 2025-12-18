@@ -79,6 +79,7 @@
       {  "rule_set": ["geosite-apple-intelligence"], "outbound": "🕹️ AppleAI" },
       { "domain": ["apps.mzstatic.com","smoot.apple.com","cp4.cloudflare.com","guzzoni.apple.com"], "outbound": "🕹️ AppleAI" },
       {  "domain_keyword": ["apple-relay" ], "outbound": "🕹️ AppleAI" },
+      { "domain": ["auth.openai.com"], "domain_suffix": [".openai.com"], "outbound": "🤖 AIchat" },
 
 
       { "rule_set": "geosite-ai-chat", "outbound": "🤖 AIchat", "action": "route" },
