@@ -80,7 +80,7 @@
       { "domain": ["apps.mzstatic.com","smoot.apple.com","cp4.cloudflare.com","guzzoni.apple.com"], "outbound": "🕹️ AppleAI" },
       {  "domain_keyword": ["apple-relay" ], "outbound": "🕹️ AppleAI" },
       { "domain": ["auth.openai.com"], "domain_suffix": [".openai.com"], "outbound": "🤖 AIchat" },
-
+      { "domain": ["googleapis.com"], "domain_suffix": [".googleapis.com"], "outbound": "🍀 Google" },
 
       { "rule_set": "geosite-ai-chat", "outbound": "🤖 AIchat", "action": "route" },
       { "rule_set": "geosite-github", "outbound": "👨‍💻 Github", "action": "route" },
