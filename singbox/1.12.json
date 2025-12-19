@@ -4,7 +4,7 @@
     "disabled": false,
     "level": "warn",
     "timestamp": true,
-    "output": "/data/box1.log"
+    "output": "/data/box12.log"
   },
   "experimental": {
     "cache_file": {
