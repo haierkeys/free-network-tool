@@ -66,6 +66,7 @@
   ],
   "route": {
     "auto_detect_interface": true,
+    "default_domain_resolver": "localDns",
     "final": "🐠 漏网之鱼",
     "rules": [
       { "ip_cidr": ["223.5.5.5/32"], "outbound": "🎯 全球直连", "action": "route" },
