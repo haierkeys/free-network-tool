@@ -3,8 +3,7 @@
   "log": {
     "disabled": false,
     "level": "warn",
-    "timestamp": true,
-    "output": "/data/box.log"
+    "timestamp": true
   },
   "experimental": {
     "cache_file": {
