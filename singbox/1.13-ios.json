@@ -94,30 +94,27 @@
   },
    "inbounds": [
     {
-        "type": "direct",
-        "tag": "dns-in",
-        "listen": "::",
-        "listen_port": 5333
+      "type": "tun",
+      "tag": "tun-in",
+      "inet4_address": "172.19.0.1/30",
+      "mtu": 9000,
+      "auto_route": true,
+      "strict_route": true,
+      "stack": "system",
+      "platform": {
+        "http_proxy": {
+          "enabled": true,
+          "server": "127.0.0.1",
+          "server_port": 2080
+        }
+      }
     },
     {
-        "type": "mixed",
-        "tag": "mixed-in",
-        "listen": "::",
-        "listen_port": 5330,
-        "set_system_proxy": false
-    },
-    {
-        "type": "redirect",
-        "tag": "redirect-in",
-        "listen": "::",
-        "listen_port": 5331
-    },
-    {
-        "type": "tproxy",
-        "tag": "tproxy-in",
-        "listen": "::",
-        "listen_port": 5332,
-        "network": "udp"
+      "type": "mixed",
+      "tag": "mixed-in",
+      "listen": "::",
+      "listen_port": 2080,
+      "set_system_proxy": false
     }
   ],
   "outbounds": [
@@ -160,7 +157,7 @@
   "route": {
     "rules": [
         { "action": "sniff" },
-        { "inbound": "dns-in", "action": "hijack-dns" },
+        { "protocol": "dns", "action": "hijack-dns" },
         { "ip_is_private": true, "outbound": "🎯 全球直连" },
         { "clash_mode": "🎯 全球直连", "outbound": "🎯 全球直连" },
         { "clash_mode": "🌐 全局代理", "outbound": "🌐 全局代理" },
