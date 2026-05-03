@@ -14,9 +14,9 @@
 
   "dns": {
     "servers": [
-      { "tag": "defaultDns", "type": "udp", "server": "223.5.5.5", "server_port": 53},
-      { "tag": "proxyDns", "type": "https", "server": "8.8.8.8", "server_port": 443, "path": "/dns-query", "detour": "🚀 节点选择"},
-      { "tag": "localDns", "type": "udp", "server": "223.5.5.5", "server_port": 53}
+      { "tag": "proxyDns", "address": "https://dns.google/dns-query", "address_resolver": "defaultDns", "address_strategy": "ipv4_only", "detour": "🚀 节点选择" },
+      { "tag": "localDns", "address": "223.5.5.5", "address_resolver": "defaultDns", "address_strategy": "ipv4_only" },
+      { "tag": "defaultDns", "address": "223.5.5.5", "address_strategy": "ipv4_only" }
     ],
     "rules": [
       { "domain": ["googleapis.com"], "domain_suffix": [".googleapis.com", ".googleapis.cn", ".gstatic.com", ".google.com", ".googleusercontent.com"], "server": "proxyDns", "action": "route" },
@@ -30,7 +30,7 @@
     "strategy": "ipv4_only"
   },
   "inbounds": [
-    { "tag": "tun-in", "type": "tun", "address": ["172.19.0.1/30"], "mtu": 1500, "auto_route": true, "stack": "system", "platform": { "http_proxy": { "enabled": true, "server": "127.0.0.1", "server_port": 2080 } } },
+    { "tag": "tun-in", "type": "tun", "address": ["172.19.0.1/30"], "mtu": 1500, "auto_route": true, "stack": "system" },
     { "type": "mixed", "tag": "in", "listen": "::", "listen_port": 2080, "users": [] }
   ],
   "outbounds": [
@@ -79,15 +79,13 @@
       { "type": "logical", "mode": "or", "rules": [{ "port": 53 }, { "protocol": "dns" }], "action": "hijack-dns" },
       { "clash_mode": "direct", "outbound": "🎯 全球直连", "action": "route" },
       { "clash_mode": "global", "outbound": "GLOBAL", "action": "route" },
-      { "domain": [".diybeta.com","diybeta.com"], "outbound": "🆚 私有站点", "action": "route" },
-
-      { "ip_cidr": ["17.248.152.145","17.248.152.113"], "outbound": "🕹️ AppleAI" },
-      { "rule_set": ["geosite-apple-intelligence"], "outbound": "🕹️ AppleAI" },
-      { "domain": ["apps.mzstatic.com","smoot.apple.com","cp4.cloudflare.com","guzzoni.apple.com"], "outbound": "🕹️ AppleAI" },
-      { "domain_keyword": ["apple-relay" ], "outbound": "🕹️ AppleAI" },
-      { "domain": ["auth.openai.com"], "domain_suffix": [".openai.com"], "outbound": "🤖 AIchat" },
-      { "domain": ["googleapis.com"], "domain_suffix": [".googleapis.com",".googleapis.cn",".gstatic.com",".google.com",".googleusercontent.com"], "outbound": "🍀 Google" },
-
+      { "domain": [".diybeta.com", "diybeta.com"], "outbound": "🆚 私有站点", "action": "route" },
+      { "ip_cidr": ["17.248.152.145", "17.248.152.113"], "outbound": "🕹️ AppleAI", "action": "route" },
+      { "rule_set": ["geosite-apple-intelligence"], "outbound": "🕹️ AppleAI", "action": "route" },
+      { "domain": ["apps.mzstatic.com", "smoot.apple.com", "cp4.cloudflare.com", "guzzoni.apple.com"], "outbound": "🕹️ AppleAI", "action": "route" },
+      { "domain_keyword": ["apple-relay"], "outbound": "🕹️ AppleAI", "action": "route" },
+      { "domain": ["auth.openai.com"], "domain_suffix": [".openai.com"], "outbound": "🤖 AIchat", "action": "route" },
+      { "domain": ["googleapis.com"], "domain_suffix": [".googleapis.com", ".googleapis.cn", ".gstatic.com", ".google.com", ".googleusercontent.com"], "outbound": "🍀 Google", "action": "route" },
       { "rule_set": "geosite-ai-chat", "outbound": "🤖 AIchat", "action": "route" },
       { "rule_set": "geosite-github", "outbound": "👨‍💻 Github", "action": "route" },
       { "rule_set": "geosite-youtube", "outbound": "📹 YouTube", "action": "route" },
@@ -98,34 +96,33 @@
       { "rule_set": ["geoip-apple", "geosite-apple"], "outbound": "🍏 Apple", "action": "route" },
       { "rule_set": ["geoip-netflix", "geosite-netflix"], "outbound": "🎥 Netflix", "action": "route" },
       { "rule_set": ["geoip-telegram", "geosite-telegram"], "outbound": "📲 Telegram", "action": "route" },
-
       { "rule_set": "geosite-gfw", "outbound": "🚀 节点选择", "action": "route" },
       { "rule_set": "geosite-geolocation-!cn", "outbound": "🚀 节点选择", "action": "route" },
       { "rule_set": ["geosite-private", "geoip-private"], "outbound": "🎯 全球直连", "action": "route" },
       { "rule_set": ["geoip-cn", "geosite-cn"], "outbound": "🎯 全球直连", "action": "route" }
     ],
     "rule_set": [
-      { "tag": "geosite-apple-intelligence", "type": "remote", "format": "binary", "url": "https://cnb.cool/haierkeys/free-network-tool/-/git/raw/master/sing-rules-dat/geo/geosite/apple-intelligence.srs", "download_detour": "🎯 全球直连" },
-      { "tag": "geosite-ai-chat", "type": "remote", "format": "binary", "url": "https://cnb.cool/haierkeys/free-network-tool/-/git/raw/master/sing-rules-dat/geo/geosite/category-ai-chat-!cn.srs", "download_detour": "🎯 全球直连" },
-      { "tag": "geosite-youtube", "type": "remote", "format": "binary", "url": "https://cnb.cool/haierkeys/free-network-tool/-/git/raw/master/sing-rules-dat/geo/geosite/youtube.srs", "download_detour": "🎯 全球直连" },
-      { "tag": "geosite-google", "type": "remote", "format": "binary", "url": "https://cnb.cool/haierkeys/free-network-tool/-/git/raw/master/sing-rules-dat/geo/geosite/google.srs", "download_detour": "🎯 全球直连" },
-      { "tag": "geosite-github", "type": "remote", "format": "binary", "url": "https://cnb.cool/haierkeys/free-network-tool/-/git/raw/master/sing-rules-dat/geo/geosite/github.srs", "download_detour": "🎯 全球直连" },
-      { "tag": "geosite-telegram", "type": "remote", "format": "binary", "url": "https://cnb.cool/haierkeys/free-network-tool/-/git/raw/master/sing-rules-dat/geo/geosite/telegram.srs", "download_detour": "🎯 全球直连" },
-      { "tag": "geosite-tiktok", "type": "remote", "format": "binary", "url": "https://cnb.cool/haierkeys/free-network-tool/-/git/raw/master/sing-rules-dat/geo/geosite/tiktok.srs", "download_detour": "🎯 全球直连" },
-      { "tag": "geosite-netflix", "type": "remote", "format": "binary", "url": "https://cnb.cool/haierkeys/free-network-tool/-/git/raw/master/sing-rules-dat/geo/geosite/netflix.srs", "download_detour": "🎯 全球直连" },
-      { "tag": "geosite-apple", "type": "remote", "format": "binary", "url": "https://cnb.cool/haierkeys/free-network-tool/-/git/raw/master/sing-rules-dat/geo/geosite/apple.srs", "download_detour": "🎯 全球直连" },
-      { "tag": "geosite-microsoft", "type": "remote", "format": "binary", "url": "https://cnb.cool/haierkeys/free-network-tool/-/git/raw/master/sing-rules-dat/geo/geosite/microsoft.srs", "download_detour": "🎯 全球直连" },
-      { "tag": "geosite-onedrive", "type": "remote", "format": "binary", "url": "https://cnb.cool/haierkeys/free-network-tool/-/git/raw/master/sing-rules-dat/geo/geosite/onedrive.srs", "download_detour": "🎯 全球直连" },
-      { "tag": "geoip-google", "type": "remote", "format": "binary", "url": "https://cnb.cool/haierkeys/free-network-tool/-/git/raw/master/sing-rules-dat/geo/geoip/google.srs", "download_detour": "🎯 全球直连" },
-      { "tag": "geoip-telegram", "type": "remote", "format": "binary", "url": "https://cnb.cool/haierkeys/free-network-tool/-/git/raw/master/sing-rules-dat/geo/geoip/telegram.srs", "download_detour": "🎯 全球直连" },
-      { "tag": "geoip-netflix", "type": "remote", "format": "binary", "url": "https://cnb.cool/haierkeys/free-network-tool/-/git/raw/master/sing-rules-dat/geo/geoip/netflix.srs", "download_detour": "🎯 全球直连" },
-      { "tag": "geoip-apple", "type": "remote", "format": "binary", "url": "https://cnb.cool/haierkeys/free-network-tool/-/git/raw/master/sing-rules-dat/geo-lite/geoip/apple.srs", "download_detour": "🎯 全球直连" },
-      { "tag": "geosite-gfw", "type": "remote", "format": "binary", "url": "https://cnb.cool/haierkeys/free-network-tool/-/git/raw/master/sing-rules-dat/geo/geosite/gfw.srs", "download_detour": "🎯 全球直连" },
-      { "tag": "geosite-geolocation-!cn", "type": "remote", "format": "binary", "url": "https://cnb.cool/haierkeys/free-network-tool/-/git/raw/master/sing-rules-dat/geo/geosite/geolocation-!cn.srs", "download_detour": "🎯 全球直连" },
-      { "tag": "geosite-cn", "type": "remote", "format": "binary", "url": "https://cnb.cool/haierkeys/free-network-tool/-/git/raw/master/sing-rules-dat/geo/geosite/cn.srs", "download_detour": "🎯 全球直连" },
-      { "tag": "geosite-private", "type": "remote", "format": "binary", "url": "https://cnb.cool/haierkeys/free-network-tool/-/git/raw/master/sing-rules-dat/geo/geosite/private.srs", "download_detour": "🎯 全球直连" },
-      { "tag": "geoip-cn", "type": "remote", "format": "binary", "url": "https://cnb.cool/haierkeys/free-network-tool/-/git/raw/master/sing-rules-dat/geo/geoip/cn.srs", "download_detour": "🎯 全球直连" },
-      { "tag": "geoip-private", "type": "remote", "format": "binary", "url": "https://cnb.cool/haierkeys/free-network-tool/-/git/raw/master/sing-rules-dat/geo/geoip/private.srs", "download_detour": "🎯 全球直连" }
-    ]
+        { "tag": "geosite-apple-intelligence", "type": "remote", "format": "binary", "url": "https://cnb.cool/haierkeys/free-network-tool/-/git/raw/master/sing-rules-dat/geo/geosite/apple-intelligence.srs", "download_detour": "🎯 全球直连" },
+        { "tag": "geosite-ai-chat", "type": "remote", "format": "binary", "url": "https://cnb.cool/haierkeys/free-network-tool/-/git/raw/master/sing-rules-dat/geo/geosite/category-ai-chat-!cn.srs", "download_detour": "🎯 全球直连" },
+        { "tag": "geosite-youtube", "type": "remote", "format": "binary", "url": "https://cnb.cool/haierkeys/free-network-tool/-/git/raw/master/sing-rules-dat/geo/geosite/youtube.srs", "download_detour": "🎯 全球直连" },
+        { "tag": "geosite-google", "type": "remote", "format": "binary", "url": "https://cnb.cool/haierkeys/free-network-tool/-/git/raw/master/sing-rules-dat/geo/geosite/google.srs", "download_detour": "🎯 全球直连" },
+        { "tag": "geosite-github", "type": "remote", "format": "binary", "url": "https://cnb.cool/haierkeys/free-network-tool/-/git/raw/master/sing-rules-dat/geo/geosite/github.srs", "download_detour": "🎯 全球直连" },
+        { "tag": "geosite-telegram", "type": "remote", "format": "binary", "url": "https://cnb.cool/haierkeys/free-network-tool/-/git/raw/master/sing-rules-dat/geo/geosite/telegram.srs", "download_detour": "🎯 全球直连" },
+        { "tag": "geosite-tiktok", "type": "remote", "format": "binary", "url": "https://cnb.cool/haierkeys/free-network-tool/-/git/raw/master/sing-rules-dat/geo/geosite/tiktok.srs", "download_detour": "🎯 全球直连" },
+        { "tag": "geosite-netflix", "type": "remote", "format": "binary", "url": "https://cnb.cool/haierkeys/free-network-tool/-/git/raw/master/sing-rules-dat/geo/geosite/netflix.srs", "download_detour": "🎯 全球直连" },
+        { "tag": "geosite-apple", "type": "remote", "format": "binary", "url": "https://cnb.cool/haierkeys/free-network-tool/-/git/raw/master/sing-rules-dat/geo/geosite/apple.srs", "download_detour": "🎯 全球直连" },
+        { "tag": "geosite-microsoft", "type": "remote", "format": "binary", "url": "https://cnb.cool/haierkeys/free-network-tool/-/git/raw/master/sing-rules-dat/geo/geosite/microsoft.srs", "download_detour": "🎯 全球直连" },
+        { "tag": "geosite-onedrive", "type": "remote", "format": "binary", "url": "https://cnb.cool/haierkeys/free-network-tool/-/git/raw/master/sing-rules-dat/geo/geosite/onedrive.srs", "download_detour": "🎯 全球直连" },
+        { "tag": "geoip-google", "type": "remote", "format": "binary", "url": "https://cnb.cool/haierkeys/free-network-tool/-/git/raw/master/sing-rules-dat/geo/geoip/google.srs", "download_detour": "🎯 全球直连" },
+        { "tag": "geoip-telegram", "type": "remote", "format": "binary", "url": "https://cnb.cool/haierkeys/free-network-tool/-/git/raw/master/sing-rules-dat/geo/geoip/telegram.srs", "download_detour": "🎯 全球直连" },
+        { "tag": "geoip-netflix", "type": "remote", "format": "binary", "url": "https://cnb.cool/haierkeys/free-network-tool/-/git/raw/master/sing-rules-dat/geo/geoip/netflix.srs", "download_detour": "🎯 全球直连" },
+        { "tag": "geoip-apple", "type": "remote", "format": "binary", "url": "https://cnb.cool/haierkeys/free-network-tool/-/git/raw/master/sing-rules-dat/geo-lite/geoip/apple.srs", "download_detour": "🎯 全球直连" },
+        { "tag": "geosite-gfw", "type": "remote", "format": "binary", "url": "https://cnb.cool/haierkeys/free-network-tool/-/git/raw/master/sing-rules-dat/geo/geosite/gfw.srs", "download_detour": "🎯 全球直连" },
+        { "tag": "geosite-geolocation-!cn", "type": "remote", "format": "binary", "url": "https://cnb.cool/haierkeys/free-network-tool/-/git/raw/master/sing-rules-dat/geo/geosite/geolocation-!cn.srs", "download_detour": "🎯 全球直连" },
+        { "tag": "geosite-cn", "type": "remote", "format": "binary", "url": "https://cnb.cool/haierkeys/free-network-tool/-/git/raw/master/sing-rules-dat/geo/geosite/cn.srs", "download_detour": "🎯 全球直连" },
+        { "tag": "geosite-private", "type": "remote", "format": "binary", "url": "https://cnb.cool/haierkeys/free-network-tool/-/git/raw/master/sing-rules-dat/geo/geosite/private.srs", "download_detour": "🎯 全球直连" },
+        { "tag": "geoip-cn", "type": "remote", "format": "binary", "url": "https://cnb.cool/haierkeys/free-network-tool/-/git/raw/master/sing-rules-dat/geo/geoip/cn.srs", "download_detour": "🎯 全球直连" },
+        { "tag": "geoip-private", "type": "remote", "format": "binary", "url": "https://cnb.cool/haierkeys/free-network-tool/-/git/raw/master/sing-rules-dat/geo/geoip/private.srs", "download_detour": "🎯 全球直连" }
+      ]
   }
 }
