@@ -15,8 +15,8 @@
   "dns": {
     "servers": [
       { "tag": "defaultDns", "type": "udp", "server": "223.5.5.5", "server_port": 53, "strategy": "ipv4_only" },
-      { "tag": "proxyDns", "type": "https", "server": "dns.google", "server_port": 443, "path": "/dns-query", "address_resolver": "defaultDns", "strategy": "ipv4_only", "detour": "🚀 节点选择" },
-      { "tag": "localDns", "type": "udp", "server": "223.5.5.5", "server_port": 53, "address_resolver": "defaultDns", "strategy": "ipv4_only" }
+      { "tag": "proxyDns", "type": "https", "server": "8.8.8.8", "server_port": 443, "path": "/dns-query", "detour": "🚀 节点选择" },
+      { "tag": "localDns", "type": "udp", "server": "223.5.5.5", "server_port": 53, "strategy": "ipv4_only" }
     ],
     "rules": [
       { "domain": ["googleapis.com"], "domain_suffix": [".googleapis.com", ".googleapis.cn", ".gstatic.com", ".google.com", ".googleusercontent.com"], "server": "proxyDns", "action": "route" },
