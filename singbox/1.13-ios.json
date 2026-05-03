@@ -28,13 +28,11 @@
        {
             "tag": "default-dns",
             "type": "udp",
-            "server": "223.5.5.5",
-            "detour": "🎯 全球直连"
+            "server": "223.5.5.5"
         },
         {
             "tag": "system-dns",
-            "type": "local",
-            "detour": "🎯 全球直连"
+            "type": "local"
         },
         {
             "tag": "proxy-dns",
@@ -51,7 +49,6 @@
                 "server": "default-dns",
                 "strategy": "prefer_ipv6"
             },
-            "detour": "🎯 全球直连",
             "type": "udp",
             "server": "223.5.5.5"
         },
