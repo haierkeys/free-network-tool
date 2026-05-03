@@ -9,7 +9,7 @@
     "cache_file": {
         "enabled": true,
         "store_rdrc": true,
-        "path": "/data/cache.db"
+        "path": "./cache.db"
     },
     "clash_api": {
       "default_mode": "rule",
