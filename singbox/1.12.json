@@ -63,7 +63,6 @@
     ],
     "rules": [
         { "domain_keyword": ["pangle", "pangolin", "byteimg", "snssdk", "volces"], "action": "route", "server": "china-dns" },
-        { "rule_set": ["adblock"], "action": "reject" },
         {
             "rule_set": "geosite-cn",
             "action": "route",
@@ -177,7 +176,6 @@
         { "clash_mode": "🎯 全球直连", "outbound": "🎯 全球直连" },
         { "clash_mode": "🌐 全局代理", "outbound": "🌐 全局代理" },
         {"domain_keyword":["pangle","pangolin","byteimg","snssdk","volces"],"outbound":"direct"},
-        { "rule_set":["adblock"],"action":"reject"},
         { "protocol": "ssh", "outbound": "🛠️ SSH" },
         { "port": 22, "outbound": "🛠️ SSH" },
         { "protocol": "ssh", "outbound": "🛠️ SSH" },
@@ -242,8 +240,7 @@
         { "tag": "geosite-cn", "type": "remote", "format": "binary", "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/cn.srs", "download_detour": "🚀 节点选择" },
         { "tag": "geosite-private", "type": "remote", "format": "binary", "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/private.srs", "download_detour": "🚀 节点选择" },
         { "tag": "geoip-cn", "type": "remote", "format": "binary", "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/cn.srs", "download_detour": "🚀 节点选择" },
-        { "tag": "geoip-private", "type": "remote", "format": "binary", "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/private.srs", "download_detour": "🚀 节点选择" },
-        { "tag": "adblock", "type": "remote", "format": "binary", "url": "https://raw.githubusercontent.com/REIJI007/AdBlock_Rule_For_Sing-box/main/adblock_reject.srs" }
+        { "tag": "geoip-private", "type": "remote", "format": "binary", "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/private.srs", "download_detour": "🚀 节点选择" }
     ],
     "auto_detect_interface": true,
     "default_domain_resolver": {
